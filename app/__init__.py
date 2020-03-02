@@ -1,8 +1,9 @@
-from flask import Flask
+from flask import Flask, render_template, url_for, request, redirect
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
-
+from flask_session import Session
 app = Flask(__name__)
+#Session(app)
 app.config['SECRET_KEY'] = "b/[prlfmq=e-cmsrt"
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://lab5:lab5@localhost/lab5"
 #app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://user:password@localhost/database"
@@ -17,4 +18,5 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 app.config.from_object(__name__)
+
 from app import views
