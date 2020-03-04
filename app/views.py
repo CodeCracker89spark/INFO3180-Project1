@@ -63,8 +63,7 @@ def login():
                 if 'remember_me' in request.form:
                     remember_me = True
                 # get user id, load into session
-                UD=user.get_id()
-                #session['ID'] = str(UD)
+                
                 login_user(user, remember=remember_me)
                 
                 
@@ -73,7 +72,7 @@ def login():
                 next_page = request.args.get('next')
                 """if not is_safe_url(next):
                     return abort(400)"""
-                return redirect(next_page or url_for('secure_page',us=user))
+                return redirect(next_page or url_for('secure_page'))
                
                 #return render_template('secure_page.html',us=user)
                 #next_page = request.args.get('next')
