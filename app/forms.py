@@ -1,8 +1,20 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField
-from wtforms.validators import InputRequired
+from wtforms import validators
+from wtforms import StringField, PasswordField, TextAreaField, SelectField
+from flask_wtf.file import FileField, FileRequired, FileAllowed
+from wtforms.validators import InputRequired, DataRequired
+from wtforms.fields.html5 import EmailField
+
+images = ['png', 'jpg', 'jpeg', 'gif','jpe']
 
 
-class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[InputRequired()])
-    password = PasswordField('Password', validators=[InputRequired()])
+class ProfileForm(FlaskForm):
+    fname = StringField('First name', validators=[InputRequired()])
+    lname = StringField('Last name', validators=[InputRequired()])
+    location = StringField('Location', validators=[InputRequired()])
+    email = EmailField('Email address', [validators.DataRequired(), validators.Email()])
+    gender = SelectField('Sex', choices=[('male', 'Male'), ('female', 'Female')])
+    photo = FileField('image', validators=[FileRequired(),FileAllowed(images, 'Images only!')])
+    bibliography = TextAreaField('Message', [
+        DataRequired()
+        ])

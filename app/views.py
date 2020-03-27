@@ -7,17 +7,26 @@ This file creates your application.
 from flask import Flask, render_template, url_for, request, redirect,abort
 from app import app, db, login_manager
 from flask_session import Session
+from  datetime import date
+import datetime
+#from app.__init__ import UPLOAD_FOLDER
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, current_user, login_required
-from app.forms import LoginForm
+from app.forms import ProfileForm
 from app.models import UserProfile
 #from is_safe_url import is_safe_url
 from werkzeug.security import check_password_hash
-
+Usergroup = []
 ###
 # Routing for your application.
 ###
+now = datetime.datetime.now()
 
+def get_profile_pic():
+    form=ProfileForm()
+    file = request.files.get('file')
+            
+    #filename = secure_filename(form.upload.data.filename)
 @app.route('/')
 def home():
     """Render website's home page."""
@@ -30,12 +39,35 @@ def about():
     return render_template('about.html')
 
 
-@app.route('/secure-page')
-@login_required
-def secure_page():
-    return render_template('secure_page.html')
+"""@app.route("/profiles", methods=["GET", "POST"])
+
+def profiles():"""
+
+@app.route("/profile", methods=["GET", "POST"])
+def profile():
+    #filefolder = UPLOAD_FOLDER
+    form = ProfileForm()
+    if request.method == "POST":
+        if form.validate_on_submit():
+        
+            # Get the username and password values from the form.
+            fname = form.fname.data
+            lname = form.lname.data
+            location = form.location.data
+            email = form.email.data
+            gender = form.gender.data
+            bibliography = form.bibliography.data
+            file = request.files.get('file')
+            
+            #filename = secure_filename(form.upload.data.filename)
+            user= UserProfile( fname, lname, location, email,bibliography,gender,file)
+            db.session.add(user)
+            db.session.commit()
+            flash('User Added successfully.', 'success')
+            #return redirect(url_for('Users'))
+    return render_template("profile.html", form=form)
     
-@app.route("/login", methods=["GET", "POST"])
+"""@app.route("/login", methods=["GET", "POST"])
 def login():
    
     form = LoginForm()
@@ -70,8 +102,8 @@ def login():
                
                 flash('Logged in successfully.', 'success')
                 next_page = request.args.get('next')
-                """if not is_safe_url(next):
-                    return abort(400)"""
+                if not is_safe_url(next):
+                    return abort(400)
                 return redirect(next_page or url_for('secure_page'))
                
                 #return render_template('secure_page.html',us=user)
@@ -84,7 +116,7 @@ def login():
             
     return render_template("login.html", form=form)
 
-
+"""
 # user_loader callback. This callback is used to reload the user object from
 # the user ID stored in the session
 @login_manager.user_loader
@@ -127,6 +159,7 @@ def add_header(response):
 def page_not_found(error):
     """Custom 404 page."""
     return render_template('404.html'), 404
+    
 
 
 if __name__ == '__main__':

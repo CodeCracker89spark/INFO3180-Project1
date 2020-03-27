@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block main %}
+<h1 class="page-header">All Users</h1>
+
+<!--ol class = "wrapper"-->
+{% for user in Users %}
+  <div class = "Profile"><!--img src="{{ url_for('static', filename='uploads/' + image) }}" alt = {{image}} width="240" height="210"/-->
+  <p>{{user.fname}} {{user.lname}}</p>
+  <p>{{user.gender}}</p>
+  <p>{{user.location}}</p>
+  </div>
+{% endfor %}
+<!--/ol-->
+{% endblock %}
