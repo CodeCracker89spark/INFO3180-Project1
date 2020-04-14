@@ -4,11 +4,15 @@ Jinja2 Documentation:    http://jinja.pocoo.org/2/documentation/
 Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 This file creates your application.
 """
+from werkzeug.utils import secure_filename
 from flask import Flask, render_template, url_for, request, redirect,abort
 from app import app, db, login_manager
+import os
+from app.__init__ import UPLOAD_FOLDER
 from flask_session import Session
 from  datetime import date
 import datetime
+from werkzeug.datastructures import CombinedMultiDict
 #from app.__init__ import UPLOAD_FOLDER
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, current_user, login_required
@@ -25,6 +29,7 @@ now = datetime.datetime.now()
 def get_profile_pic():
     form=ProfileForm()
     file = request.files.get('file')
+    print(file)
             
     #filename = secure_filename(form.upload.data.filename)
 @app.route('/')
@@ -39,15 +44,19 @@ def about():
     return render_template('about.html')
 
 
-"""@app.route("/profiles", methods=["GET", "POST"])
+@app.route("/profiles", methods=["GET", "POST"])
+def profiles():
+     users = UserProfile.query.all()
 
-def profiles():"""
+     return render_template('profiles.html', users=users)
 
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
-    #filefolder = UPLOAD_FOLDER
-    form = ProfileForm()
+    filefolder = UPLOAD_FOLDER
+    
+    form = ProfileForm(CombinedMultiDict((request.files, request.form)))
     if request.method == "POST":
+        
         if form.validate_on_submit():
         
             # Get the username and password values from the form.
@@ -57,66 +66,34 @@ def profile():
             email = form.email.data
             gender = form.gender.data
             bibliography = form.bibliography.data
+            #file= form.photo.data
             file = request.files.get('file')
+            file=form.photo.data
+            if file:
+                print("FILE EXISTS");
+                print(form.photo.data.filename)
+            filename = secure_filename(form.photo.data.filename)
+            form.photo.data.save(os.path.join(filefolder, filename))
+            #file = request.files['inputFile']
             
-            #filename = secure_filename(form.upload.data.filename)
-            user= UserProfile( fname, lname, location, email,bibliography,gender,file)
+            
+            
+            
+            #user= UserProfile( fname, lname, location, email,bibliography,gender,file)
+            user= UserProfile( fname, lname, location, email,bibliography,gender,file.filename,file.read())
             db.session.add(user)
             db.session.commit()
             flash('User Added successfully.', 'success')
-            #return redirect(url_for('Users'))
+            return redirect(url_for('home'))
+        else:
+            flash("Try again")
+            print (form.errors.items())
+            
     return render_template("profile.html", form=form)
     
-"""@app.route("/login", methods=["GET", "POST"])
-def login():
-   
-    form = LoginForm()
-    if request.method == "POST":
-        # change this to actually validate the entire form submission
-        # and not just one field
-        if form.validate_on_submit():
-            # Get the username and password values from the form.
-            username = form.username.data
-            password = form.password.data
-            # using your model, query database for a user based on the username
-            # and password submitted. Remember you need to compare the password hash.
-            # You will need to import the appropriate function to do so.
-            # Then store the result of that query to a `user` variable so it can be
-            # passed to the login_user() method below.
-            user = UserProfile.query.filter_by(username=username).first()
-            if user is not None and check_password_hash(user.password, password):
-                
-                
-                
-                
-                
-                remember_me = False
-                
-                if 'remember_me' in request.form:
-                    remember_me = True
-                # get user id, load into session
-                
-                login_user(user, remember=remember_me)
-                
-                
-               
-                flash('Logged in successfully.', 'success')
-                next_page = request.args.get('next')
-                if not is_safe_url(next):
-                    return abort(400)
-                return redirect(next_page or url_for('secure_page'))
-               
-                #return render_template('secure_page.html',us=user)
-                #next_page = request.args.get('next')
-                
-                
-                 # they should be redirected to a secure-page route instead
-            else:
-                flash('Username or Password is incorrect.', 'danger')
-            
-    return render_template("login.html", form=form)
 
-"""
+
+
 # user_loader callback. This callback is used to reload the user object from
 # the user ID stored in the session
 @login_manager.user_loader

@@ -3,6 +3,7 @@ from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_session import Session
 app = Flask(__name__)
+UPLOAD_FOLDER = './app/static/uploads'
 #Session(app)
 app.config['SECRET_KEY'] = "b/[prlfmq=e-cmsrt"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://nenhoxkimuxxle:63215cc022e181d2b073bbce4dd6ce276597437e20886e3d33685e7520b8a118@ec2-18-235-97-230.compute-1.amazonaws.com:5432/d4gs4tqc9rv7el'

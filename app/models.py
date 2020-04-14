@@ -15,15 +15,18 @@ class UserProfile(db.Model):
     email = db.Column(db.String(30), unique=True)
     bibliography = db.Column(db.String(200))
     sex =db.Column(db.String(10))
-    image=db.Column(db.LargeBinary)
-    
-    def __init__(self, first_name, last_name, location, email,bibliography,gender,image):
+    fileName =db.Column(db.String(100))
+    pic=db.Column(db.LargeBinary)
+    def __init__(self, first_name, last_name, location, email,bibliography,gender,filen,image):
+   # def __init__(self, first_name, last_name, location, email,bibliography,gender):
         self.first_name = first_name
         self.last_name = last_name
         self.location = location
         self.email = email
         self.bibliography =bibliography
         self.sex=gender
+        self.fileName=filen
+        self.pic=image
 
     def is_authenticated(self):
         return True
