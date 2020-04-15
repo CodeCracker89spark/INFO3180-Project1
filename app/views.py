@@ -26,12 +26,17 @@ Usergroup = []
 ###
 now = datetime.datetime.now()
 
-def get_profile_pic():
-    form=ProfileForm()
-    file = request.files.get('file')
-    print(file)
+def get_uploaded_images():
+    rootdir = os.getcwd()
+    image_list=[]
+    print (rootdir)
+    for subdir, dirs, files in os.walk(rootdir + '/app/static/uploads'):
+        for file in files:
+            # print (os.path.join(subdir, file))
+            print(file)
+            image_list.append( file)
+    return image_list
             
-    #filename = secure_filename(form.upload.data.filename)
 @app.route('/')
 def home():
     """Render website's home page."""
@@ -47,8 +52,8 @@ def about():
 @app.route("/profiles", methods=["GET", "POST"])
 def profiles():
      users = UserProfile.query.all()
-
-     return render_template('profiles.html', users=users)
+     pics = get_uploaded_images()
+     return render_template('profiles.html', users=users,pics=pics)
 
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
@@ -80,7 +85,7 @@ def profile():
             
             
             #user= UserProfile( fname, lname, location, email,bibliography,gender,file)
-            user= UserProfile( fname, lname, location, email,bibliography,gender,file.filename,file.read())
+            user= UserProfile( fname, lname, location, email,bibliography,gender,file.filename)
             db.session.add(user)
             db.session.commit()
             flash('User Added successfully.', 'success')
