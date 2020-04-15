@@ -33,7 +33,7 @@ def get_uploaded_images():
     for subdir, dirs, files in os.walk(rootdir + '/app/static/uploads'):
         for file in files:
             # print (os.path.join(subdir, file))
-            print(file)
+            #print(file)
             image_list.append( file)
     return image_list
             
@@ -53,7 +53,16 @@ def about():
 def profiles():
      users = UserProfile.query.all()
      pics = get_uploaded_images()
+     
      return render_template('profiles.html', users=users,pics=pics)
+     
+@app.route("/profile/<userid>", methods=["GET", "POST"])
+def pInfo(userid):
+    User = UserProfile.query.get(userid)
+    #print(User.id)
+    pics = get_uploaded_images()
+    return render_template('UserInfo.html', member=User,pics=pics)
+    
 
 @app.route("/profile", methods=["GET", "POST"])
 def profile():

@@ -6,15 +6,30 @@
 <!--ol class = "wrapper"-->
 {% for user in users %}
   <div class = "Profile">
-  <p>{{user.first_name}} {{user.last_name}}</p>
-  <p>{{user.gender}}</p>
-  <p>{{user.location}}</p>
-  
-    {% for pic in pics%}
+    <div class="flex-item">
+      {% for pic in pics%}
     {% if pic == user.fileName %}
-    <img src="{{ url_for('static', filename='uploads/' + pic) }}" alt = {{pic}} width="240" height="210"/>
+    <img src="{{ url_for('static', filename='uploads/' + pic) }}" alt = {{pic}} width="150" height="170"/>
     {% endif %}
     {% endfor %} 
+      </div>
+    <div class="flex-item">
+      
+      <p>{{user.first_name}} {{user.last_name}}</p>
+      <br>
+      <p>
+        {{user.sex}}
+      </p>
+      <br>
+      <p>{{user.location}}</p>
+      
+    </div>
+    <div class="flex-item">
+      <a href="https://1f41faa76d6648bbbf9e8544ac004635.vfs.cloud9.us-east-1.amazonaws.com/profile/{{user.id}}"><button type="button" class = "vp">View Profile</button></a>
+    </div>
+ 
+  
+    
   
   </div>
 {% endfor %}

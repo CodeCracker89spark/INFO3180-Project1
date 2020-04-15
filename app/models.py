@@ -14,7 +14,7 @@ class UserProfile(db.Model):
     last_name = db.Column(db.String(80))
     location = db.Column(db.String(80))
     email = db.Column(db.String(30), unique=True)
-    bibliography = db.Column(db.String(200))
+    bibliography = db.Column(db.String(600))
     sex =db.Column(db.String(10))
     fileName =db.Column(db.String(100))
     #pic=db.Column(db.LargeBinary)
