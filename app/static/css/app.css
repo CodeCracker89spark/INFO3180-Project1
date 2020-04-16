@@ -1,16 +1,112 @@
 body {
     padding-top: 5rem;
+    background-color: cyan;
 }
+button{
+    border-radius: 12px;
+}
+
 .Profile{
-    border: 0.5px solid black;
+    
     /*display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;*/
+    border-radius: 8px;
     display: grid;
     grid-template-columns: 250px 3fr 2fr;
+    margin-top: 30px;
+    background-color: white;
+    height: 180px;
+    border: 3px solid gold;
 }
 
 .vp{
-    margin-top: 80px;
+    margin-top: 50px;
+    background-color: yellow;
+    width: 150px;
+    color: purple;
+    
+}
+
+#send{
+    color: white;
+    background-color: green;
+    
+    
+}
+#about{
+    font-weight: bold;
+}
+
+#follow{
+    color: white;
+    background-color: blue;
+    margin-left: 10px;
+}
+#send{
+    margin-right: 10px;
+}
+.data{
+    border: 0.5px solid black;
+    width: 70%;
+    margin-left: 100px;
+    margin-top: 60px;
+    background-color:white;
+}
+
+.icon{
+    height: 20px;
+    width: 20px;
+    display: inline-block;
+}
+.UInfo,#place,#sex{
+    display: inline;
+    color: grey;
+    
+}
+
+.options{
+    margin-top: 50px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.UserName{
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 10px;
+}
+.flex-item1{
+    text-align: center;
+}
+.icon{
+   /* margin-top: 300px;*/
+   
+}
+.profPhoto{
+    border-radius:50%;
+    height: 95%;
+    margin-left: 30px;
+}
+.life{
+    margin-left: 60px;
+    margin-top: 60px;
+}
+#follow,#send{
+    width: 200px;
+    height: 40px;
+}
+.flex-item2{
+    margin-left: 40px;
+}
+.info{
+    margin-top: 50px;
+     /*border: 0.5px solid blue;*/
+    margin-left: 30px;
+    /*display: flex;
+    
+    flex-direction: row;*/
+    display: grid;
+    line-height:2;
+    grid-template-columns: 1fr 3fr
 }

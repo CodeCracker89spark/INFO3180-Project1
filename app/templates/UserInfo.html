@@ -2,7 +2,36 @@
 
 {% block main %}
 
-<p>Hello World</p>
-<p>{{member.first_name}}</p>
+<div class = "data">
+    <div class = "info">
+        <div class = "flex-item1">
+      {% for pic in pics%}
+    {% if pic == member.fileName %}
+    <img class = "profPhoto" src="{{ url_for('static', filename='uploads/' + pic) }}" alt = {{pic}} width="150" height="170"/>
+    {% endif %}
+    {% endfor %} 
+     </div>
+    <div class = "flex-item2">
+        <p class = "UserName">{{member.first_name}} {{member.last_name}}</p>
+        <img class = "icon" src="{{ url_for('static',filename='mail.png') }}"><p class = "UInfo">  {{member.email}}</p>
+        <br>
+        <img class = "icon" src="{{ url_for('static',filename='location.png') }}"><p class = "UInfo">  {{member.location}}</p>
+        <br>
+        <img class = "icon" src="{{ url_for('static',filename='calendar.png') }}"><p class = "UInfo"> Joined on  {{member.date_joined}}</p>
+    
+        
+    </div>
+    </div>
+    <div class = "life">
+        <p id = "about">About Me</p>
+        
+        <p>{{member.biography}}</p>
+    </div>
+    <div class = "options">
+        <button type="button" id = "send">Send Message</button> <button type="button" id = "follow">Follow</button>
+    </div>
+</div>
+
+
 
 {% endblock %}

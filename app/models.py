@@ -14,21 +14,22 @@ class UserProfile(db.Model):
     last_name = db.Column(db.String(80))
     location = db.Column(db.String(80))
     email = db.Column(db.String(30), unique=True)
-    bibliography = db.Column(db.String(600))
+    biography = db.Column(db.String(600))
     sex =db.Column(db.String(10))
     fileName =db.Column(db.String(100))
+    date_joined = db.Column(db.String(40))
     #pic=db.Column(db.LargeBinary)
     
-    def __init__(self, first_name, last_name, location, email,bibliography,gender,filen):
+    def __init__(self, first_name, last_name, location, email,biography,gender,filen,date):
    # def __init__(self, first_name, last_name, location, email,bibliography,gender):
         self.first_name = first_name
         self.last_name = last_name
         self.location = location
         self.email = email
-        self.bibliography =bibliography
+        self.biography =biography
         self.sex=gender
         self.fileName=filen
-        
+        self.date_joined = date
 
     def is_authenticated(self):
         return True

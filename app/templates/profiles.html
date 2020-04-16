@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block main %}
-<h1 class="page-header">All Users</h1>
+<h1 class="page-header">Profiles</h1>
 
 <!--ol class = "wrapper"-->
 {% for user in users %}
@@ -9,23 +9,23 @@
     <div class="flex-item">
       {% for pic in pics%}
     {% if pic == user.fileName %}
-    <img src="{{ url_for('static', filename='uploads/' + pic) }}" alt = {{pic}} width="150" height="170"/>
+    <img class = "profPhoto" src="{{ url_for('static', filename='uploads/' + pic) }}" alt = {{pic}} width="160" />
     {% endif %}
     {% endfor %} 
       </div>
     <div class="flex-item">
       
-      <p>{{user.first_name}} {{user.last_name}}</p>
+      <p class = "UserName">{{user.first_name}} {{user.last_name}}</p>
+       <img class = "icon" src="{{ url_for('static',filename='gender.png') }}">
+      <p id = "sex">{{user.sex}}</p>
       <br>
-      <p>
-        {{user.sex}}
-      </p>
       <br>
-      <p>{{user.location}}</p>
+      <img class = "icon" src="{{ url_for('static',filename='location.png') }}"><p id = "place">{{user.location}}</p>
       
     </div>
     <div class="flex-item">
-      <a href="https://1f41faa76d6648bbbf9e8544ac004635.vfs.cloud9.us-east-1.amazonaws.com/profile/{{user.id}}"><button type="button" class = "vp">View Profile</button></a>
+      <!--a href="https://1f41faa76d6648bbbf9e8544ac004635.vfs.cloud9.us-east-1.amazonaws.com/profile/{{user.id}}"><button type="button" class = "vp">View Profile</button></a-->
+      <a href="{{ url_for('pInfo', userid=user.id) }}" class="btn btn-primary vp">View Profile</a>
     </div>
  
   

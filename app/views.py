@@ -77,9 +77,12 @@ def profile():
             fname = form.fname.data
             lname = form.lname.data
             location = form.location.data
+            now = datetime.datetime.now()
+            currentDate = now.strftime("%B-%d-%Y")
+            #currentDate = now.strftime("%d-%B-%Y %H:%M:%S")
             email = form.email.data
             gender = form.gender.data
-            bibliography = form.bibliography.data
+            biography = form.biography.data
             #file= form.photo.data
             file = request.files.get('file')
             file=form.photo.data
@@ -94,7 +97,7 @@ def profile():
             
             
             #user= UserProfile( fname, lname, location, email,bibliography,gender,file)
-            user= UserProfile( fname, lname, location, email,bibliography,gender,file.filename)
+            user= UserProfile( fname, lname, location, email,biography,gender,file.filename,currentDate)
             db.session.add(user)
             db.session.commit()
             flash('User Added successfully.', 'success')
